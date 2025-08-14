@@ -32,9 +32,6 @@ function App() {
         className="navbar has-background is-spaced is-fluid is-fullheight"
         role="navigation"
         aria-label="main navigation"
-        initial={{ y: -60, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6 }}
       >
         <div className="navbar-brand">
           <Link
