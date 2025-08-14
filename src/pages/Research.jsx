@@ -26,7 +26,7 @@ const Research = () => {
 
   return (
     <section className="section">
-      <div className="container is-fluid">
+      <div className="container is-fluid is-fullheight">
         <h1 className="title has-text-centered">Research</h1>
         <p className="content">
           Welcome to my research page. Here you'll find insights into my current
@@ -35,7 +35,7 @@ const Research = () => {
         </p>
 
         <h2 className="subtitle mt-5">📘 Selected Publications</h2>
-        <div className="columns is-multiline">
+        <div className="columns is-multiline is-fluid is-fullheight">
           {manualPapers.map((pub, index) => (
             <div className="column is-6" key={index}>
               <div className="card">
@@ -62,7 +62,7 @@ const Research = () => {
         </div>
 
         <h2 className="subtitle mt-6">📄 Latest arXiv Papers</h2>
-        <div className="columns is-multiline">
+        <div className="columns is-multiline is-fluid is-fullheight">
           {arxivPapers.map((paper, index) => (
             <div className="column is-6" key={index}>
               <div className="card">
