@@ -1,124 +1,163 @@
-// src/Home.jsx
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { motion } from "framer-motion";
+
+const navLinks = [
+  { to: "/cv", title: "Curriculum Vitae", description: "Academic background, certifications & skills" },
+  { to: "/research", title: "Research", description: "Publications & ongoing working papers" },
+  { to: "/teaching", title: "Teaching", description: "Courses taught & teaching materials" },
+  { to: "/r-projects", title: "R Projects", description: "Code, data & analysis from GitHub" },
+];
+
+const interests = [
+  "Financial Econometrics",
+  "Network Volatility Models",
+  "Commodity Markets",
+  "Resource Dependence",
+  "Institutional Quality",
+  "Panel Data Methods",
+];
 
 function Home() {
-  const [isActive, setIsActive] = useState(false);
-
   return (
     <>
-      {/* Hero Section */}
-      <section className="hero is-medium is-link is-bold">
-        <div className="hero-body is-fluid">
+      <section className="hero is-large site-hero">
+        <div className="hero-body">
           <div className="container has-text-centered">
-            <h1 className="title is-size-3-mobile is-size-2-tablet is-size-1-desktop">
-              Fayçal Djebari
-            </h1>
-            <h3 className="subtitle is-size-5-mobile is-size-4-tablet">
-              Ph.D. Candidate in Quantitative Economics
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <span className="hero-eyebrow">Quantitative Economics · Financial Econometrics</span>
+              <h1 className="title is-size-3-mobile is-size-2-tablet is-size-1-desktop">
+                Fayçal Djebari
+              </h1>
+              <h2 className="subtitle is-tagline is-size-5-mobile is-size-4-tablet mt-3">
+                Ph.D. Candidate — University of Béjaïa, Algeria
+                <br />
+                <span style={{ opacity: 0.75, fontSize: "0.9em" }}>
+                  Visiting Researcher — Universidad de Granada · Erasmus+ 2026
+                </span>
+              </h2>
+              <div className="buttons is-centered mt-5">
+                <Link to="/research" className="button is-medium is-cta">
+                  View Research
+                </Link>
+                <Link to="/cv" className="button is-medium is-cta-outline">
+                  Curriculum Vitae
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      <div className="page-wrap">
+        <motion.div className="section-block" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
+          <h2 className="section-heading">About</h2>
+          <p style={{ lineHeight: "1.85", maxWidth: "600px" }}>
+            I am a Ph.D. candidate in Quantitative Economics at the University of Béjaïa, where I also teach Financial Econometrics at the master's level. My research spans financial econometrics and development economics, combining network-based volatility models, dynamic conditional correlations, and panel data methods to study commodity market dynamics, systemic risk, and the distributional consequences of resource dependence in oil-exporting economies.
+          </p>
+          <p style={{ lineHeight: "1.85", maxWidth: "600px", marginTop: "1rem" }}>
+            My work is conducted in collaboration with researchers at the University of Glasgow and Cardiff University, and I am currently a visiting researcher at the Universidad de Granada under an Erasmus+ fellowship.
+          </p>
+        </motion.div>
+
+        <motion.div className="section-block" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.05 }}>
+          <h2 className="section-heading">Research Interests</h2>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+            {interests.map((interest) => (
+              <span className="tag-soft" key={interest}>{interest}</span>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div className="section-block" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}>
+          <h2 className="section-heading">Explore</h2>
+          <div className="nav-link-list">
+            {navLinks.map(({ to, title, description }, index) => (
+              <motion.div key={to} initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.35, delay: index * 0.05 }}>
+                <Link to={to} className="nav-link-row">
+                  <span>
+                    <span className="nav-link-title">{title}</span>
+                    <span className="nav-link-desc">{description}</span>
+                  </span>
+                  <span className="nav-link-arrow">&rarr;</span>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div className="section-block" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.15 }}>
+          <h2 className="section-heading">Get in Touch</h2>
+          <p style={{ lineHeight: "1.85", maxWidth: "600px" }}>
+            For collaboration, questions, or speaking inquiries, feel free to reach out directly.
+          </p>
+          <ul className="simple-list">
+            <li>
+              <span className="item-title">Email</span>
               <br />
-              Part-time Lecturer in Financial Econometrics
-            </h3>
-            <h2 className="subtitle is-size-4">
-              University of Béjaïa, Algeria
-            </h2>
-          </div>
-        </div>
-      </section>
-
-      {/* Introduction Section */}
-      <section className="section">
-        <div className="container is-fluid">
-          <div className="content has-text-centered">
-            <p>
-              Welcome to my academic portfolio. Here you'll find my research,
-              teaching materials, and ways to connect.
-            </p>
-          </div>
-
-          {/* Navigation Cards */}
-          <div className="columns is-multiline is-variable is-8 is-centered">
-            {/* CV Card */}
-            <div className="column is-12-mobile is-6-tablet is-4-desktop">
-              <div className="card">
-                <div className="card-content has-text-centered">
-                  <p className="title is-4">📄 Curriculum Vitae</p>
-                  <p className="subtitle is-6">
-                    Academic background & publications
-                  </p>
-                  <Link to="/cv" className="button is-link is-outlined mt-3">
-                    View CV
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* Teaching Card */}
-            <div className="column is-12-mobile is-6-tablet is-4-desktop">
-              <div className="card">
-                <div className="card-content has-text-centered">
-                  <p className="title is-4">📘 Teaching</p>
-                  <p className="subtitle is-6">Courses & materials</p>
-                  <Link
-                    to="/teaching"
-                    className="button is-link is-outlined mt-3"
-                  >
-                    Explore Teaching
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* Contact Card */}
-            <div className="column is-12-mobile is-6-tablet is-4-desktop">
-              <div className="card">
-                <div className="card-content has-text-centered">
-                  <p className="title is-4">📬 Contact</p>
-                  <p className="subtitle is-6">Get in touch</p>
-                  <Link
-                    to="/contact"
-                    className="button is-link is-outlined mt-3"
-                  >
-                    Contact Me
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* R Projects Card */}
-            <div className="column is-12-mobile is-6-tablet is-4-desktop">
-              <div className="card">
-                <div className="card-content has-text-centered">
-                  <p className="title is-4">📂 R Projects</p>
-                  <p className="subtitle is-6">Code & data from GitHub</p>
-                  <Link
-                    to="/r-projects"
-                    className="button is-link is-outlined mt-3"
-                  >
-                    Browse Projects
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* Research Card */}
-            <div className="column is-12-mobile is-6-tablet is-4-desktop">
-              <div className="card">
-                <div className="card-content has-text-centered">
-                  <p className="title is-4">📚 Research</p>
-                  <p className="subtitle is-6">Projects & publications</p>
-                  <Link
-                    to="/research"
-                    className="button is-link is-outlined mt-3"
-                  >
-                    Explore Research
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+              <a href="mailto:faycal.djebari@univ-bejaia.dz">faycal.djebari@univ-bejaia.dz</a>
+            </li>
+            <li>
+              <span className="item-title">ResearchGate</span>
+              <br />
+              <a
+                href="https://www.researchgate.net/profile/Faycal-Djebari?ev=hdr_xprf"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Visit Profile
+              </a>
+            </li>
+            <li>
+              <span className="item-title">ORCID</span>
+              <br />
+              <a
+                href="https://orcid.org/0009-0002-9265-9541"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Visit Profile
+              </a>
+            </li>
+            <li>
+              <span className="item-title">Google Scholar</span>
+              <br />
+              <a
+                href="https://scholar.google.com/citations?user=A_YUrlYAAAAJ&hl=fr"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Visit Profile
+              </a>
+            </li>
+            <li>
+              <span className="item-title">arXiv</span>
+              <br />
+              <a
+                href="https://arxiv.org/a/djebari_f_1.html"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Visit Profile
+              </a>
+            </li>
+            <li>
+              <span className="item-title">LinkedIn</span>
+              <br />
+              <a
+                href="https://www.linkedin.com/in/faycaldjebari06/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Visit Profile
+              </a>
+            </li>
+          </ul>
+        </motion.div>
+      </div>
     </>
   );
 }
