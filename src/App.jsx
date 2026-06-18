@@ -77,6 +77,17 @@ function SiteNav() {
     setIsActive(false);
   }, [location.pathname]);
 
+  useEffect(() => {
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (!meta) return;
+    // Mirrors the navbar's own color: navy over the unscrolled hero, else
+    // whatever the page background actually resolves to (light or dark).
+    const solidColor = getComputedStyle(document.documentElement)
+      .getPropertyValue("--page-bg")
+      .trim();
+    meta.setAttribute("content", isHome && progress < 0.5 ? "#16243b" : solidColor);
+  }, [isHome, progress]);
+
   return (
     <nav
       className="navbar site-navbar is-fixed-top"

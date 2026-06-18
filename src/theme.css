@@ -1,7 +1,105 @@
+/* ---------- Theme variables ----------
+   Loaded after bulma.min.css (see App.jsx import order) so these reliably
+   win the cascade — Bulma redeclares several of the same variable names
+   (e.g. --bulma-link-l, and formerly --bulma-body-background-color) in its
+   own :root and prefers-color-scheme blocks, which would otherwise silently
+   override anything defined earlier in index.css. */
+:root {
+  --bulma-family-primary: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bulma-body-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --bulma-link-h: 212deg;
+  --bulma-link-s: 48%;
+  --bulma-link-l: 27%;
+
+  --bulma-primary-h: 212deg;
+  --bulma-primary-s: 48%;
+  --bulma-primary-l: 27%;
+
+  --bulma-info-h: 198deg;
+  --bulma-info-s: 60%;
+  --bulma-info-l: 40%;
+
+  --bulma-scheme-h: 210deg;
+  --bulma-scheme-s: 20%;
+
+  --page-bg: #fbfaf8;
+
+  /* Stable brand navy — used for the hero/footer/browser chrome. Does NOT
+     flip between light/dark mode; --color-ink is the one that flips. */
+  --color-navy: #16243b;
+
+  --color-ink: #16243b;
+  --color-ink-soft: #45597a;
+  --color-accent: #b8853a;
+  --color-accent-soft: #e8d6b8;
+  --color-border: #e6e1d8;
+  --color-surface: #ffffff;
+  --tag-soft-bg: #eef2f7;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page-bg: #0d1420;
+    --color-ink: #f2f0ec;
+    --color-ink-soft: #9badc4;
+    --color-border: rgba(255, 255, 255, 0.12);
+    --color-surface: #16243b;
+    --tag-soft-bg: rgba(255, 255, 255, 0.08);
+    --bulma-link-l: 72%;
+  }
+}
+
+html,
+body,
+#root {
+  /* min-height (not height): height:100% clamps body to exactly one
+     viewport tall (percentage heights resolve against the viewport, not
+     "grow with content"), which hid html's background everywhere below
+     the first screen on any page taller than the viewport. */
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* Matches the footer/hero navy so iOS Safari's overscroll bounce at the
+     bottom of the page shows brand color instead of a flash of white. */
+  background-color: var(--color-navy);
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--page-bg);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+h1.title,
+h2.title,
+h3.title,
+.hero .title {
+  font-family: "Lora", Georgia, serif;
+  letter-spacing: -0.01em;
+}
+
+a {
+  font-weight: 500;
+}
+
 /* ---------- Navbar ---------- */
 .site-navbar {
   --nav-progress: 1;
-  background-color: color-mix(in srgb, transparent calc((1 - var(--nav-progress)) * 100%), var(--bulma-body-background-color) calc(var(--nav-progress) * 100%));
+  background-color: color-mix(in srgb, transparent calc((1 - var(--nav-progress)) * 100%), var(--page-bg) calc(var(--nav-progress) * 100%));
   border-bottom: 1px solid color-mix(in srgb, transparent calc((1 - var(--nav-progress)) * 100%), var(--color-border) calc(var(--nav-progress) * 100%));
   box-shadow: 0 1px 0 rgba(22, 36, 59, calc(var(--nav-progress) * 0.03));
   transition: background-color 0.12s linear, border-color 0.12s linear, box-shadow 0.12s linear;
@@ -50,7 +148,7 @@
 
 @media screen and (max-width: 1023px) {
   .site-navbar .navbar-menu {
-    background-color: var(--bulma-body-background-color);
+    background-color: var(--page-bg);
     box-shadow: 0 4px 12px rgba(22, 36, 59, 0.08);
   }
 
@@ -204,7 +302,7 @@
 
 /* ---------- Footer ---------- */
 .site-footer {
-  background-color: var(--color-ink) !important;
+  background-color: var(--color-navy) !important;
   color: rgba(255, 255, 255, 0.72);
 }
 
@@ -353,7 +451,7 @@
 
 .tag-soft {
   display: inline-block;
-  background-color: #eef2f7;
+  background-color: var(--tag-soft-bg);
   color: var(--color-ink-soft);
   border-radius: 6px;
   padding: 0.35rem 0.7rem;
