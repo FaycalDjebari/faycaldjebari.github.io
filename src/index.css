@@ -45,6 +45,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 h1.title,
 h2.title,
 h3.title,

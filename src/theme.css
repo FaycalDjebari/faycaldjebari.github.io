@@ -49,8 +49,18 @@
 }
 
 @media screen and (max-width: 1023px) {
-  .site-navbar {
-    --nav-progress: 1 !important;
+  .site-navbar .navbar-menu {
+    background-color: var(--bulma-body-background-color);
+    box-shadow: 0 4px 12px rgba(22, 36, 59, 0.08);
+  }
+
+  .site-navbar .navbar-menu .navbar-item.nav-link {
+    color: var(--color-ink-soft);
+  }
+
+  .site-navbar .navbar-menu .navbar-item.nav-link:hover,
+  .site-navbar .navbar-menu .navbar-item.nav-link.is-current {
+    color: var(--color-ink);
   }
 }
 

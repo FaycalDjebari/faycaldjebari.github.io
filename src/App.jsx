@@ -131,7 +131,7 @@ function App() {
 
       <SiteNav />
 
-      <main style={{ paddingTop: "3.25rem" }}>
+      <main style={{ paddingTop: "3.25rem", flex: "1 0 auto" }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/research" element={<Research />} />
