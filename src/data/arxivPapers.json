@@ -1,0 +1,10 @@
+[
+  {
+    "title": "Forecasting Oil Volatility through Network Models with GARCH-Informed Correlation Weights",
+    "published": "2025-07-20T12:58:54-04:00",
+    "summary": "This study addresses the computational challenges of forecasting volatility in high-dimensional commodity markets. Building on the Network log-ARCH framework, we introduce a novel class of network topologies from GARCH-informed correlation weights, obtained from conditional covariance estimates of multivariate GARCH models, rather than relying on the heuristic distance measures commonly used in clustering methods. We evaluate the proposed models forecasting performance through a rolling-window exercise using a panel of OPEC members crude oil prices. The results identify network volatility models incorporating these new GARCH-informed weights as the statistically superior specifications. Remarkably, the proposed framework matches standard DCC-GARCH predictive accuracy while delivering up to 62,000-fold computational gains. By explicitly modeling contemporaneous spillovers through interpretable spatial ARCH-like lags estimated via GMM, the proposed approach offers an optimal trade-off between parsimony, interpretability, and performance. The findings establish GARCH-informed network models as robust, scalable alternatives for systemic risk measurement and volatility forecasting in interconnected financial markets.",
+    "link": "http://arxiv.org/abs/2507.15046v2",
+    "authors": "Fayçal Djebari, Kahina Mehidi, Khelifa Mazouz, Philipp Otto",
+    "arxivId": "2507.15046v2"
+  }
+]
