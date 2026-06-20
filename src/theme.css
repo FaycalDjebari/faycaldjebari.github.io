@@ -316,11 +316,18 @@ a {
   .site-hero {
     min-height: 100vh;
     min-height: 100dvh;
-    /* Bulma's .hero is itself a column flexbox with justify-content:
-       space-between, which only matters with 2+ children — with a single
-       .hero-body child that just pins it to the top. Override so the
-       content centers within the now full-screen-height section. */
-    justify-content: center;
+  }
+
+  /* Bulma only makes .hero-body a centering flex container when .hero also
+     has .is-fullheight/.is-fullheight-with-navbar/.is-halfheight — ours
+     doesn't, so .hero-body was staying display:block. It still expanded to
+     fill the tall hero (a separate flex-grow:1 rule on .hero-body always
+     applies), but its content then just sat at the top in normal block
+     flow instead of centering within that space. Replicate what
+     is-fullheight would have done, scoped to mobile only. */
+  .site-hero .hero-body {
+    display: flex;
+    align-items: center;
   }
 }
 
