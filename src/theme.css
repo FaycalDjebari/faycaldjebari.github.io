@@ -121,7 +121,15 @@ a {
 .site-navbar .navbar-brand {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  flex: 1;
   min-height: 3.25rem;
+}
+
+@media screen and (min-width: 1024px) {
+  .site-navbar .navbar-brand {
+    flex: 0 0 auto;
+  }
 }
 
 .site-navbar .navbar-item.brand {
@@ -246,9 +254,13 @@ a {
   right: 0;
   z-index: 2;
   padding: 0.5rem 1.25rem 1.25rem;
+  /* Blur only — no saturate(). Blur preserves the average color of
+     whatever's behind it (so it still reads as "the same color"), it just
+     softens detail enough that the hero's own text doesn't show through
+     and clash with the menu links sitting on top of it. */
   background-color: color-mix(in srgb, transparent calc((1 - var(--nav-progress)) * 100%), var(--page-bg) calc(var(--nav-progress) * 100%));
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
   border-bottom: 1px solid color-mix(in srgb, rgba(255, 255, 255, 0.18) calc((1 - var(--nav-progress)) * 100%), var(--color-border) calc(var(--nav-progress) * 100%));
   box-shadow: 0 16px 32px rgba(8, 14, 26, 0.16);
 }
