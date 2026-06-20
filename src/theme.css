@@ -36,6 +36,11 @@
   --color-border: #e6e1d8;
   --color-surface: #ffffff;
   --tag-soft-bg: #eef2f7;
+
+  /* Total navbar height including the iOS safe-area inset (notch/Dynamic
+     Island), so fixed/offset elements clear it on devices that have one
+     and are unaffected (env() resolves to 0) on devices that don't. */
+  --nav-height: calc(3.25rem + env(safe-area-inset-top));
 }
 
 @media (prefers-color-scheme: dark) {
@@ -103,7 +108,7 @@ a {
   align-items: center;
   justify-content: space-between;
   min-height: 3.25rem;
-  padding: 0 1rem;
+  padding: env(safe-area-inset-top) 1rem 0;
   background-color: color-mix(in srgb, transparent calc((1 - var(--nav-progress)) * 100%), var(--page-bg) calc(var(--nav-progress) * 100%));
   border-bottom: 1px solid color-mix(in srgb, transparent calc((1 - var(--nav-progress)) * 100%), var(--color-border) calc(var(--nav-progress) * 100%));
   box-shadow: 0 1px 0 rgba(22, 36, 59, calc(var(--nav-progress) * 0.03));
@@ -242,14 +247,14 @@ a {
 /* ---------- Mobile menu panel ---------- */
 .mobile-menu-backdrop {
   position: fixed;
-  inset: 3.25rem 0 0 0;
+  inset: var(--nav-height) 0 0 0;
   background: rgba(8, 14, 26, 0.32);
   z-index: 1;
 }
 
 .mobile-menu-panel {
   position: fixed;
-  top: 3.25rem;
+  top: var(--nav-height);
   left: 0;
   right: 0;
   z-index: 2;
@@ -303,8 +308,20 @@ a {
   background: linear-gradient(160deg, #16243b 0%, #1f3a5f 55%, #2c4a6e 100%);
   position: relative;
   overflow: hidden;
-  margin-top: -3.25rem;
-  padding-top: 3.25rem;
+  margin-top: calc(-1 * var(--nav-height));
+  padding-top: var(--nav-height);
+}
+
+@media screen and (max-width: 1023px) {
+  .site-hero {
+    min-height: 100vh;
+    min-height: 100dvh;
+    /* Bulma's .hero is itself a column flexbox with justify-content:
+       space-between, which only matters with 2+ children — with a single
+       .hero-body child that just pins it to the top. Override so the
+       content centers within the now full-screen-height section. */
+    justify-content: center;
+  }
 }
 
 .site-hero::before {
