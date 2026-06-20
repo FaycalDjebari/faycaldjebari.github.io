@@ -7,7 +7,7 @@ import RProjects from "./pages/RProjects";
 import Research from "./pages/Research";
 import "bulma/css/bulma.min.css";
 import "./theme.css";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { FaResearchgate, FaOrcid, FaLinkedin } from "react-icons/fa";
 import { SiGooglescholar, SiArxiv } from "react-icons/si";
 
@@ -88,6 +88,22 @@ function SiteNav() {
     meta.setAttribute("content", isHome && progress < 0.5 ? "#16243b" : solidColor);
   }, [isHome, progress]);
 
+  useEffect(() => {
+    document.body.style.overflow = isActive ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isActive]);
+
+  useEffect(() => {
+    if (!isActive) return;
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") setIsActive(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isActive]);
+
   return (
     <nav
       className="navbar site-navbar is-fixed-top"
@@ -103,34 +119,78 @@ function SiteNav() {
         >
           Fayçal Djebari
         </Link>
-        <a
-          role="button"
-          className={`navbar-burger ${isActive ? "is-active" : ""}`}
-          aria-label="menu"
+
+        <button
+          type="button"
+          className={`nav-burger ${isActive ? "is-active" : ""}`}
+          aria-label={isActive ? "Close menu" : "Open menu"}
           aria-expanded={isActive}
-          onClick={() => setIsActive(!isActive)}
+          onClick={() => setIsActive((v) => !v)}
         >
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
+          <span />
+          <span />
+          <span />
+        </button>
       </div>
-      <div className={`navbar-menu ${isActive ? "is-active" : ""}`}>
-        <div className="navbar-end">
-          {navLinks.map(({ to, label }) => (
-            <NavLink
-              key={to}
-              className={({ isActive: current }) =>
-                `navbar-item nav-link ${current ? "is-current" : ""}`
-              }
-              to={to}
+
+      <div className="navbar-menu-desktop">
+        {navLinks.map(({ to, label }) => (
+          <NavLink
+            key={to}
+            className={({ isActive: current }) =>
+              `navbar-item nav-link ${current ? "is-current" : ""}`
+            }
+            to={to}
+          >
+            {label}
+          </NavLink>
+        ))}
+      </div>
+
+      <AnimatePresence>
+        {isActive && (
+          <>
+            <motion.div
+              className="mobile-menu-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              onClick={() => setIsActive(false)}
+            />
+            <motion.div
+              className="mobile-menu-panel"
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
             >
-              {label}
-            </NavLink>
-          ))}
-        </div>
-      </div>
+              {navLinks.map(({ to, label }, index) => (
+                <motion.div
+                  key={to}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    delay: 0.06 + index * 0.045,
+                    duration: 0.3,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                >
+                  <NavLink
+                    className={({ isActive: current }) =>
+                      `mobile-nav-link ${current ? "is-current" : ""}`
+                    }
+                    to={to}
+                    onClick={() => setIsActive(false)}
+                  >
+                    {label}
+                  </NavLink>
+                </motion.div>
+              ))}
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

@@ -99,6 +99,11 @@ a {
 /* ---------- Navbar ---------- */
 .site-navbar {
   --nav-progress: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 3.25rem;
+  padding: 0 1rem;
   background-color: color-mix(in srgb, transparent calc((1 - var(--nav-progress)) * 100%), var(--page-bg) calc(var(--nav-progress) * 100%));
   border-bottom: 1px solid color-mix(in srgb, transparent calc((1 - var(--nav-progress)) * 100%), var(--color-border) calc(var(--nav-progress) * 100%));
   box-shadow: 0 1px 0 rgba(22, 36, 59, calc(var(--nav-progress) * 0.03));
@@ -113,9 +118,10 @@ a {
   background-color: transparent !important;
 }
 
-.site-navbar .navbar-burger span {
-  background-color: color-mix(in srgb, #ffffff calc((1 - var(--nav-progress)) * 100%), var(--color-ink) calc(var(--nav-progress) * 100%));
-  transition: background-color 0.12s linear;
+.site-navbar .navbar-brand {
+  display: flex;
+  align-items: center;
+  min-height: 3.25rem;
 }
 
 .site-navbar .navbar-item.brand {
@@ -125,6 +131,20 @@ a {
   color: var(--color-ink) !important;
   opacity: var(--nav-progress);
   transition: opacity 0.12s linear;
+  padding: 0;
+}
+
+/* ---------- Desktop nav links (>=1024px) ---------- */
+.navbar-menu-desktop {
+  display: none;
+}
+
+@media screen and (min-width: 1024px) {
+  .navbar-menu-desktop {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
 }
 
 .site-navbar .navbar-item.nav-link {
@@ -133,33 +153,14 @@ a {
   font-size: 0.92rem;
   letter-spacing: 0.01em;
   position: relative;
+  padding: 0.5rem 1rem;
   color: color-mix(in srgb, rgba(255, 255, 255, 0.88) calc((1 - var(--nav-progress)) * 100%), var(--color-ink-soft) calc(var(--nav-progress) * 100%));
   transition: color 0.12s linear;
 }
 
-.site-navbar .navbar-item.nav-link:hover {
-  color: color-mix(in srgb, #ffffff calc((1 - var(--nav-progress)) * 100%), var(--color-ink) calc(var(--nav-progress) * 100%));
-  background-color: transparent;
-}
-
+.site-navbar .navbar-item.nav-link:hover,
 .site-navbar .navbar-item.nav-link.is-current {
   color: color-mix(in srgb, #ffffff calc((1 - var(--nav-progress)) * 100%), var(--color-ink) calc(var(--nav-progress) * 100%));
-}
-
-@media screen and (max-width: 1023px) {
-  .site-navbar .navbar-menu {
-    background-color: var(--page-bg);
-    box-shadow: 0 4px 12px rgba(22, 36, 59, 0.08);
-  }
-
-  .site-navbar .navbar-menu .navbar-item.nav-link {
-    color: var(--color-ink-soft);
-  }
-
-  .site-navbar .navbar-menu .navbar-item.nav-link:hover,
-  .site-navbar .navbar-menu .navbar-item.nav-link.is-current {
-    color: var(--color-ink);
-  }
 }
 
 .site-navbar .navbar-item.nav-link.is-current::after {
@@ -167,19 +168,122 @@ a {
   position: absolute;
   left: 1rem;
   right: 1rem;
-  bottom: 0.4rem;
+  bottom: 0.25rem;
   height: 2px;
   background-color: var(--color-accent);
   border-radius: 2px;
 }
 
-@media screen and (max-width: 1023px) {
-  .site-navbar .navbar-item.nav-link.is-current::after {
+/* ---------- Mobile hamburger (<1024px) — morphs into an X ---------- */
+.nav-burger {
+  display: inline-flex;
+  position: relative;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media screen and (min-width: 1024px) {
+  .nav-burger {
     display: none;
   }
-  .site-navbar .navbar-item.nav-link.is-current {
-    font-weight: 600;
+}
+
+.nav-burger span {
+  position: absolute;
+  left: 0.55rem;
+  right: 0.55rem;
+  height: 2px;
+  border-radius: 2px;
+  background-color: color-mix(in srgb, #ffffff calc((1 - var(--nav-progress)) * 100%), var(--color-ink) calc(var(--nav-progress) * 100%));
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease,
+    top 0.32s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.12s linear;
+}
+
+.nav-burger span:nth-child(1) {
+  top: 0.75rem;
+}
+
+.nav-burger span:nth-child(2) {
+  top: 1.12rem;
+}
+
+.nav-burger span:nth-child(3) {
+  top: 1.49rem;
+}
+
+.nav-burger.is-active span:nth-child(1) {
+  top: 1.12rem;
+  transform: rotate(45deg);
+}
+
+.nav-burger.is-active span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.nav-burger.is-active span:nth-child(3) {
+  top: 1.12rem;
+  transform: rotate(-45deg);
+}
+
+/* ---------- Mobile menu panel ---------- */
+.mobile-menu-backdrop {
+  position: fixed;
+  inset: 3.25rem 0 0 0;
+  background: rgba(8, 14, 26, 0.32);
+  z-index: 1;
+}
+
+.mobile-menu-panel {
+  position: fixed;
+  top: 3.25rem;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  padding: 0.5rem 1.25rem 1.25rem;
+  background-color: color-mix(in srgb, transparent calc((1 - var(--nav-progress)) * 100%), var(--page-bg) calc(var(--nav-progress) * 100%));
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid color-mix(in srgb, rgba(255, 255, 255, 0.18) calc((1 - var(--nav-progress)) * 100%), var(--color-border) calc(var(--nav-progress) * 100%));
+  box-shadow: 0 16px 32px rgba(8, 14, 26, 0.16);
+}
+
+@media screen and (min-width: 1024px) {
+  .mobile-menu-backdrop,
+  .mobile-menu-panel {
+    display: none;
   }
+}
+
+.mobile-nav-link {
+  display: block;
+  padding: 0.85rem 0.25rem;
+  font-family: "Manrope", "Inter", system-ui, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border-bottom: 1px solid color-mix(in srgb, rgba(255, 255, 255, 0.14) calc((1 - var(--nav-progress)) * 100%), var(--color-border) calc(var(--nav-progress) * 100%));
+  color: color-mix(in srgb, rgba(255, 255, 255, 0.92) calc((1 - var(--nav-progress)) * 100%), var(--color-ink-soft) calc(var(--nav-progress) * 100%));
+  transition: color 0.12s linear, padding-left 0.2s ease;
+}
+
+.mobile-nav-link:last-child {
+  border-bottom: none;
+}
+
+.mobile-nav-link:active,
+.mobile-nav-link.is-current {
+  padding-left: 0.6rem;
+  color: color-mix(in srgb, #ffffff calc((1 - var(--nav-progress)) * 100%), var(--color-ink) calc(var(--nav-progress) * 100%));
+}
+
+.mobile-nav-link.is-current {
+  font-weight: 700;
 }
 
 /* ---------- Hero ---------- */
