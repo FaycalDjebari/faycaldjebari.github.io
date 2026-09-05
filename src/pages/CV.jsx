@@ -67,20 +67,30 @@ function CV() {
       </div>
 
       <div className="section-block">
-        <h2 className="section-heading">Selected Publications</h2>
-        <ul className="simple-list">
-          <li>
-            Mehidi, K., Djebari, F. (2024).{" "}
-            <em>Algeria's Economic Diversification Challenge: The Role of Startups, Hydrocarbon Rent, and Institutional Quality</em>.
-            <br />
-            <span className="item-meta">Revue de Recherches en Gestion et Economie, Vol. 6, No. 3, pp. 360–382.</span>
-            <br />
-            <a href="https://asjp.cerist.dz/en/article/255763" target="_blank" rel="noopener noreferrer">
-              View Article
-            </a>
-          </li>
-        </ul>
-      </div>
+  <h2 className="section-heading">Publications</h2>
+  <ul className="simple-list">
+    <li>
+      Djebari, F., Mehidi, K., & Mazouz, K. (2026).{" "}
+      <em>Tail Connectedness in European Equity Markets: Regime Persistence and the Role of Geopolitical Risk</em>.
+      <br />
+      <span className="item-meta">International Journal of Financial Studies, Vol. 14, No. 9, Art. 235.</span>
+      <br />
+      <a href="https://doi.org/10.3390/ijfs14090235" target="_blank" rel="noopener noreferrer">
+        View Article
+      </a>
+    </li>
+    <li>
+      Mehidi, K., Djebari, F. (2024).{" "}
+      <em>Algeria's Economic Diversification Challenge: The Role of Startups, Hydrocarbon Rent, and Institutional Quality</em>.
+      <br />
+      <span className="item-meta">Revue de Recherches en Gestion et Economie, Vol. 6, No. 3, pp. 360–382.</span>
+      <br />
+      <a href="https://asjp.cerist.dz/en/article/255763" target="_blank" rel="noopener noreferrer">
+        View Article
+      </a>
+    </li>
+  </ul>
+</div>
 
       <div className="section-block">
         <h2 className="section-heading">Working Papers</h2>
