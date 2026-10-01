@@ -35,6 +35,15 @@ function CV() {
           </li>
           <li>
             <span className="item-title">
+              Visiting Ph.D. Researcher
+            </span>
+            <br />
+            <span className="item-meta">
+              University of Glasgow, United Kingdom · September 2026 to October 2026
+            </span>
+          </li>
+          <li>
+            <span className="item-title">
               Visiting Ph.D. Researcher · Erasmus+ Fellowship
             </span>
             <br />
