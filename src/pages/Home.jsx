@@ -36,7 +36,7 @@ function Home() {
                 Ph.D. Candidate — University of Béjaïa, Algeria
                 <br />
                 <span style={{ opacity: 0.75, fontSize: "0.9em" }}>
-                  Visiting Researcher — University of Glasgow (2026) ·Universidad de Granada (Erasmus+ 2026)
+                  Visiting Researcher — University of Glasgow (2026) · Universidad de Granada (Erasmus+ 2026)
                 </span>
               </h2>
               <div className="buttons is-centered mt-5">
