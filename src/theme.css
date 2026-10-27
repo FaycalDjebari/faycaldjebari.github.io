@@ -474,24 +474,35 @@ a {
 }
 
 /* Offset gold frame behind the photo — a quiet editorial accent. */
+/* Mobile: the photo is near full-width, so an offset frame would hit the
+   screen edge. Instead the frame surrounds it evenly, with the photo inset
+   by the frame gap so the whole unit stays inside the page gutter. */
 .about-photo-col {
   position: relative;
   flex-shrink: 0;
-  width: min(100%, 360px);
-  margin: 0 auto;
+  width: min(calc(100% - 24px), 360px);
+  margin: 12px auto;
 }
 
 .about-photo-col::before {
   content: "";
   position: absolute;
-  inset: 14px -14px -14px 14px;
-  border: 2px solid var(--color-accent);
-  border-radius: 16px;
-  opacity: 0.55;
+  inset: -12px;
+  border: 1.5px solid var(--color-accent);
+  border-radius: 26px;
+  opacity: 0.7;
   pointer-events: none;
 }
 
+/* Desktop: there's room beside the photo for an offset editorial frame. */
 @media screen and (min-width: 900px) {
+  .about-photo-col::before {
+    inset: 14px -14px -14px 14px;
+    border-width: 2px;
+    border-radius: 16px;
+    opacity: 0.55;
+  }
+
   .about-photo-col {
     width: 340px;
     margin: 0;
@@ -760,11 +771,31 @@ a {
   resize: vertical;
 }
 
+/* ---------- Hero: research statement + affiliation ---------- */
+.hero-statement {
+  position: relative;
+  max-width: 40rem;
+  margin: 1.25rem auto 0;
+  font-family: "Lora", Georgia, serif;
+  font-size: clamp(1.15rem, 1rem + 0.9vw, 1.6rem);
+  font-weight: 500;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.hero-affiliation {
+  position: relative;
+  max-width: 40rem;
+  margin: 1rem auto 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.62);
+}
+
 /* ---------- Hero: availability line + scroll cue ---------- */
 .hero-availability {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
+  display: inline-block;
+  text-align: center;
   margin-top: 1.25rem;
   padding: 0.4rem 0.9rem;
   border: 1px solid rgba(255, 255, 255, 0.22);
@@ -777,6 +808,9 @@ a {
 }
 
 .hero-availability-dot {
+  display: inline-block;
+  vertical-align: 0.08em;
+  margin-right: 0.5rem;
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;

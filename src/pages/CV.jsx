@@ -237,12 +237,14 @@ function CV() {
             <span className="item-meta">
               University of Béjaïa, Algeria · Sept 2023 to Present
             </span>
-            {courses.map((course) => (
-              <span key={course.title}>
-                <br />
-                {course.title} ({course.meta})
-              </span>
-            ))}
+            {courses.flatMap((course) =>
+              course.offerings.map((offering) => (
+                <span key={course.title + offering}>
+                  <br />
+                  {course.title} ({offering})
+                </span>
+              ))
+            )}
           </li>
         </ul>
       </div>

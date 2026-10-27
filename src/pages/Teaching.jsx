@@ -15,8 +15,12 @@ function Teaching() {
             <li key={course.title}>
               <span className="item-title">{course.title}</span>
               <br />
-              <span className="item-meta">{course.meta}</span>
-              <br />
+              {course.offerings.map((offering) => (
+                <span key={offering}>
+                  <span className="item-meta">{offering}</span>
+                  <br />
+                </span>
+              ))}
               {course.description}
             </li>
           ))}

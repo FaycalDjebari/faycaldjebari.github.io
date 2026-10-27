@@ -1,7 +1,15 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { exploreLinks } from "../data/nav";
-import { bioParagraphs, visitingPositions, interests, collaboratingInstitutions } from "../data/bio";
+import {
+  heroTitle,
+  heroStatement,
+  heroAffiliation,
+  bioParagraphs,
+  visitingPositions,
+  interests,
+  collaboratingInstitutions,
+} from "../data/bio";
 import { publications } from "../data/publications";
 import { workInProgress } from "../data/cv";
 import { socialLinks, contactEmail } from "../data/socialLinks";
@@ -33,17 +41,12 @@ function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <span className="hero-eyebrow">Quantitative Economics · Financial Econometrics</span>
-              <h1 className="title is-size-3-mobile is-size-2-tablet is-size-1-desktop">
+              <span className="hero-eyebrow">{heroTitle}</span>
+              <h1 className="title is-size-2-mobile is-size-1-tablet">
                 Fayçal Djebari
               </h1>
-              <h2 className="subtitle is-tagline is-size-5-mobile is-size-4-tablet mt-3">
-                Ph.D. Candidate — University of Béjaïa, Algeria
-                <br />
-                <span style={{ opacity: 0.75, fontSize: "0.9em" }}>
-                  Visiting Researcher — University of Glasgow (2026) · Universidad de Granada (Erasmus+ 2026)
-                </span>
-              </h2>
+              <p className="hero-statement">{heroStatement}</p>
+              <p className="hero-affiliation">{heroAffiliation}</p>
               <p className="hero-availability">
                 <span className="hero-availability-dot" aria-hidden="true" />
                 Open to postdoctoral opportunities &amp; research collaborations
