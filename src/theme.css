@@ -1174,3 +1174,141 @@ a {
     transform: none;
   }
 }
+
+/* ---------- CV viewer ---------- */
+.button.is-cv-outline {
+  background-color: transparent;
+  border-color: var(--color-border);
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.button.is-cv-outline:hover {
+  border-color: var(--color-accent);
+  color: var(--color-ink);
+}
+
+.cv-version {
+  font-size: 0.82rem;
+  color: var(--color-ink-soft);
+}
+
+.cv-viewer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: rgba(8, 14, 26, 0.6);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.cv-viewer {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 980px);
+  height: min(100%, 1200px);
+  border-radius: 14px;
+  overflow: hidden;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 30px 80px rgba(8, 14, 26, 0.45);
+}
+
+.cv-viewer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.75rem 1rem 0.75rem 1.25rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cv-viewer-title {
+  font-family: "Lora", Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.cv-viewer-version {
+  margin-left: 0.6rem;
+  font-size: 0.8rem;
+  color: var(--color-ink-soft);
+}
+
+.cv-viewer-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cv-viewer-btn {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-ink);
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+.cv-viewer-btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-ink);
+}
+
+.cv-viewer-btn.is-primary {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #1c1305;
+}
+
+.cv-viewer-btn.is-primary:hover {
+  background-color: #c8954a;
+  color: #1c1305;
+}
+
+.cv-viewer-close {
+  width: 2.2rem;
+  height: 2.2rem;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-ink-soft);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.cv-viewer-close:hover,
+.cv-viewer-close:focus-visible {
+  background-color: var(--tag-soft-bg);
+  color: var(--color-ink);
+}
+
+.cv-viewer-frame {
+  flex: 1;
+  width: 100%;
+  border: none;
+  background-color: #525659;
+}
+
+@media screen and (max-width: 640px) {
+  .cv-viewer-backdrop {
+    padding: 0;
+  }
+
+  .cv-viewer {
+    height: 100%;
+    border-radius: 0;
+  }
+
+  .cv-viewer-btn:not(.is-primary) {
+    display: none;
+  }
+}

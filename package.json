@@ -10,11 +10,9 @@
     "fetch-arxiv": "node scripts/fetch-arxiv.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
-    "dev": "vite",
-  "build": "vite build",
-  "preview": "vite preview",
-  "predeploy": "npm run build",
-  "deploy": "gh-pages -d dist"
+    "cv": "bash scripts/build-cv.sh",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.0.0",
