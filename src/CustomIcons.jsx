@@ -21,3 +21,18 @@ export const ArxivIcon = () => (
     <path d="M12 0L8 8h8l-4-8zm0 24l4-8H8l4 8zM2 9h20v6H2V9z" />
   </svg>
 );
+
+// Monogram badges — react-icons' "si" set has no Scopus/Web of Science
+// glyphs, and at the ~18px size used inside .social-icon-link circles,
+// styled text reads cleaner than a fabricated brand SVG.
+export const ScopusIcon = () => (
+  <span aria-hidden="true" style={{ fontSize: "0.62em", fontWeight: 700, letterSpacing: "-0.02em" }}>
+    Sc
+  </span>
+);
+
+export const WebOfScienceIcon = () => (
+  <span aria-hidden="true" style={{ fontSize: "0.5em", fontWeight: 700, letterSpacing: "-0.03em" }}>
+    WoS
+  </span>
+);

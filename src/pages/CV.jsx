@@ -1,5 +1,28 @@
 import { useEffect, useState } from "react";
 import { fetchArxivPapers } from "../utils/fetchArxiv";
+import { visitingPositions } from "../data/bio";
+import { publications } from "../data/publications";
+import { courses } from "../data/courses";
+import { replicationPackages } from "../data/replicationPackages";
+import { orcidUrl, scopusUrl, webOfScienceUrl } from "../data/socialLinks";
+import {
+  cvPdfPath,
+  workingPaperNote,
+  doctoralThesis,
+  workInProgress,
+  conferencePresentations,
+  peerReviewActivities,
+  thesisSupervision,
+  technicalSkills,
+  languages,
+} from "../data/cv";
+
+function positionAt(institution) {
+  return visitingPositions.find((p) => p.institution.includes(institution));
+}
+
+const glasgow = positionAt("Glasgow");
+const granada = positionAt("Granada");
 
 function CV() {
   const [arxivPapers, setArxivPapers] = useState([]);
@@ -19,6 +42,16 @@ function CV() {
         <p className="page-intro">
           Academic background, publications, and experience.
         </p>
+        <a href={cvPdfPath} download="Faycal-Djebari-CV.pdf" className="button is-cta mt-4">
+          Download CV (PDF)
+        </a>
+        <p className="cv-identifiers mt-4">
+          <a href={orcidUrl} target="_blank" rel="noopener noreferrer">ORCID</a>
+          {" · "}
+          <a href={scopusUrl} target="_blank" rel="noopener noreferrer">Scopus</a>
+          {" · "}
+          <a href={webOfScienceUrl} target="_blank" rel="noopener noreferrer">Web of Science</a>
+        </p>
       </div>
 
       <div className="section-block">
@@ -35,20 +68,20 @@ function CV() {
           </li>
           <li>
             <span className="item-title">
-              Visiting Ph.D. Researcher
+              {glasgow.role}
             </span>
             <br />
             <span className="item-meta">
-              University of Glasgow, United Kingdom · September 2026 to October 2026
+              {glasgow.institution} · {glasgow.period} · Host: {glasgow.host}
             </span>
           </li>
           <li>
             <span className="item-title">
-              Visiting Ph.D. Researcher · Erasmus+ Fellowship
+              {granada.role}
             </span>
             <br />
             <span className="item-meta">
-              Universidad de Granada, Spain · April 2026 to July 2026
+              {granada.institution} · {granada.period} · Host: {granada.host}
             </span>
           </li>
           <li>
@@ -64,6 +97,27 @@ function CV() {
             <span className="item-meta">
               University of Béjaïa · Graduated: 2020
             </span>
+          </li>
+        </ul>
+      </div>
+
+      <div className="section-block">
+        <h2 className="section-heading">Doctoral Thesis</h2>
+        <ul className="simple-list">
+          <li>
+            <span className="item-title">{doctoralThesis.title}</span>
+            <br />
+            <span className="item-meta">Main Supervisor: {doctoralThesis.mainSupervisor}</span>
+            <br />
+            <span className="item-meta">Co-Supervisor: {doctoralThesis.coSupervisor}</span>
+            <br />
+            {doctoralThesis.hostSupervisors.map((host) => (
+              <span className="item-meta" key={host}>
+                Host Supervisor: {host}
+                <br />
+              </span>
+            ))}
+            <span className="item-meta">Laboratory: {doctoralThesis.laboratory}</span>
           </li>
         </ul>
       </div>
@@ -100,48 +154,17 @@ function CV() {
       <div className="section-block">
         <h2 className="section-heading">Publications</h2>
         <ul className="simple-list">
-          <li>
-            Djebari, F., Mehidi, K., & Mazouz, K. (2026).{" "}
-            <em>
-              Tail Connectedness in European Equity Markets: Regime Persistence
-              and the Role of Geopolitical Risk
-            </em>
-            .
-            <br />
-            <span className="item-meta">
-              International Journal of Financial Studies, Vol. 14, No. 9, Art.
-              235.
-            </span>
-            <br />
-            <a
-              href="https://doi.org/10.3390/ijfs14090235"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View Article
-            </a>
-          </li>
-          <li>
-            Mehidi, K., Djebari, F. (2024).{" "}
-            <em>
-              Algeria's Economic Diversification Challenge: The Role of
-              Startups, Hydrocarbon Rent, and Institutional Quality
-            </em>
-            .
-            <br />
-            <span className="item-meta">
-              Revue de Recherches en Gestion et Economie, Vol. 6, No. 3, pp.
-              360–382.
-            </span>
-            <br />
-            <a
-              href="https://asjp.cerist.dz/en/article/255763"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View Article
-            </a>
-          </li>
+          {publications.map((pub) => (
+            <li key={pub.id}>
+              {pub.authors} ({pub.year}). <em>{pub.title}</em>.
+              <br />
+              <span className="item-meta">{pub.journal}</span>
+              <br />
+              <a href={pub.link} target="_blank" rel="noopener noreferrer">
+                View Article
+              </a>
+            </li>
+          ))}
         </ul>
       </div>
 
@@ -162,6 +185,8 @@ function CV() {
                   arXiv preprint arXiv:{paper.arxivId}
                 </span>
                 <br />
+                <span className="item-meta">{workingPaperNote}</span>
+                <br />
                 <a href={paper.link} target="_blank" rel="noopener noreferrer">
                   View on arXiv
                 </a>
@@ -172,7 +197,33 @@ function CV() {
       </div>
 
       <div className="section-block">
-        <h2 className="section-heading">Academic Experience</h2>
+        <h2 className="section-heading">Work in Progress</h2>
+        <ul className="simple-list">
+          {workInProgress.map((item) => (
+            <li key={item.title}>
+              <span className="item-title">{item.title}</span>
+              <br />
+              <span className="item-meta">{item.collaborators}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="section-block">
+        <h2 className="section-heading">Conference Presentations</h2>
+        <ul className="simple-list">
+          {conferencePresentations.map((item) => (
+            <li key={item.title}>
+              {item.authors} ({item.year}). <em>{item.title}</em>.
+              <br />
+              <span className="item-meta">{item.venue}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="section-block">
+        <h2 className="section-heading">Teaching Experience</h2>
         <ul className="simple-list">
           <li>
             <span className="item-title">Part-Time Lecturer</span>
@@ -180,15 +231,37 @@ function CV() {
             <span className="item-meta">
               University of Béjaïa, Algeria · Sept 2023 to Present
             </span>
-            <br />
-            <span>
-              Financial Econometrics and Financial Modelling (Master's Level)
-            </span>
-            <br />
-            <span>Deep Learning Techniques (Master's Level)</span>
-            <br />
-            <span>Computable General Equilibrium Models (Master's Level)</span>
+            {courses.map((course) => (
+              <span key={course.title}>
+                <br />
+                {course.title} ({course.meta})
+              </span>
+            ))}
           </li>
+        </ul>
+      </div>
+
+      <div className="section-block">
+        <h2 className="section-heading">Thesis Supervision</h2>
+        <ul className="simple-list">
+          {thesisSupervision.map((item) => (
+            <li key={item.title}>
+              <span className="item-title">{item.title}</span>
+              <br />
+              <span className="item-meta">{item.students}</span>
+              <br />
+              <span className="item-meta">{item.meta}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="section-block">
+        <h2 className="section-heading">Peer Review Activities</h2>
+        <ul className="simple-list">
+          {peerReviewActivities.map((journal) => (
+            <li key={journal}>{journal}</li>
+          ))}
         </ul>
       </div>
 
@@ -208,27 +281,48 @@ function CV() {
       </div>
 
       <div className="section-block">
-        <h2 className="section-heading">Projects and Repositories</h2>
+        <h2 className="section-heading">Technical Skills</h2>
+        <p className="item-meta" style={{ marginBottom: "0.5rem" }}>Programming</p>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1.25rem" }}>
+          {technicalSkills.programming.map((skill) => (
+            <span className="tag-soft" key={skill}>{skill}</span>
+          ))}
+        </div>
+        <p className="item-meta" style={{ marginBottom: "0.5rem" }}>Software</p>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+          {technicalSkills.software.map((skill) => (
+            <span className="tag-soft" key={skill}>{skill}</span>
+          ))}
+        </div>
+      </div>
+
+      <div className="section-block">
+        <h2 className="section-heading">Languages</h2>
         <ul className="simple-list">
-          <li>
-            <span className="item-title">
-              Volatility Spillovers and Interconnectedness in OPEC Oil Markets
-            </span>
-            <br />
-            <span>
-              Reproducibility guide and full R code for the network-based
-              log-ARCH framework. Includes GMM estimation, MGARCH benchmarks,
-              and forecasting diagnostics.
-            </span>
-            <br />
-            <a
-              href="https://github.com/FaycalDjebari/Volatility-Spillovers-and-Interconnectedness-in-OPEC-Oil-Markets"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View Repository
-            </a>
-          </li>
+          {languages.map((item) => (
+            <li key={item.language}>
+              <span className="item-title">{item.language}</span>
+              <br />
+              <span className="item-meta">{item.level}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="section-block">
+        <h2 className="section-heading">Replication Packages</h2>
+        <ul className="simple-list">
+          {replicationPackages.map((pkg) => (
+            <li key={pkg.repo}>
+              <span className="item-title">{pkg.title}</span>
+              <br />
+              <span>{pkg.description}</span>
+              <br />
+              <a href={pkg.repo} target="_blank" rel="noopener noreferrer">
+                View Repository
+              </a>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

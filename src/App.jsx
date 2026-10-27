@@ -8,15 +8,8 @@ import Research from "./pages/Research";
 import "bulma/css/bulma.min.css";
 import "./theme.css";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaResearchgate, FaOrcid, FaLinkedin } from "react-icons/fa";
-import { SiGooglescholar, SiArxiv } from "react-icons/si";
-
-const navLinks = [
-  { to: "/research", label: "Research" },
-  { to: "/cv", label: "Curriculum Vitae" },
-  { to: "/teaching", label: "Teaching" },
-  { to: "/r-projects", label: "R Projects" },
-];
+import { primaryNavLinks as navLinks } from "./data/nav";
+import { socialLinks } from "./data/socialLinks";
 
 const pageTitles = {
   "/": "Home",
@@ -36,14 +29,6 @@ function PageTitle() {
 
   return null;
 }
-
-const socialLinks = [
-  { href: "https://www.researchgate.net/profile/Faycal-Djebari?ev=hdr_xprf", label: "ResearchGate", Icon: FaResearchgate },
-  { href: "https://orcid.org/0009-0002-9265-9541", label: "ORCID", Icon: FaOrcid },
-  { href: "https://scholar.google.com/citations?user=A_YUrlYAAAAJ&hl=fr", label: "Google Scholar", Icon: SiGooglescholar },
-  { href: "https://arxiv.org/a/djebari_f_1.html", label: "arXiv", Icon: SiArxiv },
-  { href: "https://www.linkedin.com/in/faycaldjebari06/", label: "LinkedIn", Icon: FaLinkedin },
-];
 
 function SiteNav() {
   const [isActive, setIsActive] = useState(false);
@@ -141,6 +126,7 @@ function SiteNav() {
               `navbar-item nav-link ${current ? "is-current" : ""}`
             }
             to={to}
+            end={to === "/"}
           >
             {label}
           </NavLink>
@@ -181,6 +167,7 @@ function SiteNav() {
                       `mobile-nav-link ${current ? "is-current" : ""}`
                     }
                     to={to}
+                    end={to === "/"}
                     onClick={() => setIsActive(false)}
                   >
                     {label}

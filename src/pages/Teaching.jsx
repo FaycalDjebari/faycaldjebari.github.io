@@ -1,3 +1,5 @@
+import { courses } from "../data/courses";
+
 function Teaching() {
   return (
     <div className="page-wrap">
@@ -9,39 +11,15 @@ function Teaching() {
       <div className="section-block">
         <h2 className="section-heading">Courses Taught</h2>
         <ul className="simple-list">
-          <li>
-            <span className="item-title">Computable General Equilibrium Models</span>
-            <br />
-            <span className="item-meta">1st Semester 2025–2026 · Master's Level</span>
-            <br />
-            Introduction to CGE modeling frameworks for economic policy analysis. Topics include
-            social accounting matrices, calibration techniques, and simulation of fiscal and trade
-            policy shocks.
-          </li>
-          <li>
-            <span className="item-title">Deep Learning Techniques</span>
-            <br />
-            <span className="item-meta">1st Semester 2025–2026 · Master's Level</span>
-            <br />
-            Foundations of neural network architectures and their applications in economics and
-            finance. Topics include feedforward networks, recurrent neural networks, and
-            sequence modeling for economic forecasting.
-          </li>
-          <li>
-            <span className="item-title">Financial Econometrics</span>
-            <br />
-            <span className="item-meta">2nd Semester 2024–2025 · Master's Level</span>
-            <br />
-            Time series modeling and volatility analysis for financial data. Topics include stationarity, ARMA processes, and ARCH and GARCH models.
-          </li>
-          <li>
-            <span className="item-title">Financial Modelling</span>
-            <br />
-            <span className="item-meta">1st Semester 2023–2024 · Master's Level</span>
-            <br />
-            Quantitative modeling, simulation, and forecasting in financial markets. Emphasis on
-            econometric tools and practical applications.
-          </li>
+          {courses.map((course) => (
+            <li key={course.title}>
+              <span className="item-title">{course.title}</span>
+              <br />
+              <span className="item-meta">{course.meta}</span>
+              <br />
+              {course.description}
+            </li>
+          ))}
         </ul>
       </div>
 

@@ -1,21 +1,12 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { exploreLinks } from "../data/nav";
+import { bioParagraphs, visitingPositions, interests } from "../data/bio";
+import { publications } from "../data/publications";
+import { socialLinks, contactEmail } from "../data/socialLinks";
+import profilePhoto from "../assets/profile-glasgow.jpg";
 
-const navLinks = [
-  { to: "/cv", title: "Curriculum Vitae", description: "Academic background, certifications & skills" },
-  { to: "/research", title: "Research", description: "Publications & ongoing working papers" },
-  { to: "/teaching", title: "Teaching", description: "Courses taught & teaching materials" },
-  { to: "/r-projects", title: "R Projects", description: "Code, data & analysis from GitHub" },
-];
-
-const interests = [
-  "Financial Econometrics",
-  "Network Volatility Models",
-  "Commodity Markets",
-  "Resource Dependence",
-  "Institutional Quality",
-  "Panel Data Methods",
-];
+const flagshipPaper = publications.find((p) => p.flagship);
 
 function Home() {
   return (
@@ -55,12 +46,49 @@ function Home() {
       <div className="page-wrap">
         <motion.div className="section-block" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
           <h2 className="section-heading">About</h2>
-          <p style={{ lineHeight: "1.85", maxWidth: "600px" }}>
-            I am a Ph.D. candidate in Quantitative Economics at the University of Béjaïa, where I also teach Financial Econometrics at the master's level. My research spans financial econometrics and development economics, combining network-based volatility models, dynamic conditional correlations, and panel data methods to study commodity market dynamics, systemic risk, and the distributional consequences of resource dependence in oil-exporting economies.
-          </p>
-          <p style={{ lineHeight: "1.85", maxWidth: "600px", marginTop: "1rem" }}>
-            My work is conducted in collaboration with researchers at the University of Glasgow and Cardiff University, and I am currently a visiting researcher at the Universidad de Granada under an Erasmus+ fellowship.
-          </p>
+          <div className="about-grid">
+            <motion.div
+              className="profile-photo-frame"
+              whileHover={{ y: -6 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            >
+              <img src={profilePhoto} alt="Fayçal Djebari at the University of Glasgow" />
+            </motion.div>
+
+            <div className="about-text">
+              {bioParagraphs.map((paragraph, index) => (
+                <p key={index} style={{ lineHeight: "1.85", marginBottom: index < bioParagraphs.length - 1 ? "1rem" : 0 }}>
+                  {paragraph}
+                </p>
+              ))}
+
+              <ul className="simple-list about-visiting-list mt-4">
+                {visitingPositions.map((position) => (
+                  <li key={position.institution}>
+                    <span className="item-title">{position.institution}</span>
+                    <br />
+                    <span className="item-meta">
+                      {position.role} · {position.period} · Host: {position.host}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {flagshipPaper && (
+            <motion.a
+              href={flagshipPaper.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flagship-card"
+              whileHover={{ scale: 1.01 }}
+            >
+              <span className="section-eyebrow">Featured Publication</span>
+              <p className="pub-title">{flagshipPaper.title}</p>
+              <p className="pub-meta">{flagshipPaper.journal}</p>
+            </motion.a>
+          )}
         </motion.div>
 
         <motion.div className="section-block" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.05 }}>
@@ -75,7 +103,7 @@ function Home() {
         <motion.div className="section-block" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}>
           <h2 className="section-heading">Explore</h2>
           <div className="nav-link-list">
-            {navLinks.map(({ to, title, description }, index) => (
+            {exploreLinks.map(({ to, title, description }, index) => (
               <motion.div key={to} initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.35, delay: index * 0.05 }}>
                 <Link to={to} className="nav-link-row">
                   <span>
@@ -92,69 +120,24 @@ function Home() {
         <motion.div className="section-block" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.15 }}>
           <h2 className="section-heading">Get in Touch</h2>
           <p style={{ lineHeight: "1.85", maxWidth: "600px" }}>
-            For collaboration, questions, or speaking inquiries, feel free to reach out directly.
+            I'm always glad to hear from researchers working in related areas — for collaboration,
+            postdoctoral opportunities, or speaking inquiries, feel free to reach out directly.
           </p>
           <ul className="simple-list">
             <li>
               <span className="item-title">Email</span>
               <br />
-              <a href="mailto:faycal.djebari@univ-bejaia.dz">faycal.djebari@univ-bejaia.dz</a>
+              <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
             </li>
-            <li>
-              <span className="item-title">ResearchGate</span>
-              <br />
-              <a
-                href="https://www.researchgate.net/profile/Faycal-Djebari?ev=hdr_xprf"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Visit Profile
-              </a>
-            </li>
-            <li>
-              <span className="item-title">ORCID</span>
-              <br />
-              <a
-                href="https://orcid.org/0009-0002-9265-9541"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Visit Profile
-              </a>
-            </li>
-            <li>
-              <span className="item-title">Google Scholar</span>
-              <br />
-              <a
-                href="https://scholar.google.com/citations?user=A_YUrlYAAAAJ&hl=fr"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Visit Profile
-              </a>
-            </li>
-            <li>
-              <span className="item-title">arXiv</span>
-              <br />
-              <a
-                href="https://arxiv.org/a/djebari_f_1.html"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Visit Profile
-              </a>
-            </li>
-            <li>
-              <span className="item-title">LinkedIn</span>
-              <br />
-              <a
-                href="https://www.linkedin.com/in/faycaldjebari06/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Visit Profile
-              </a>
-            </li>
+            {socialLinks.map(({ href, label }) => (
+              <li key={label}>
+                <span className="item-title">{label}</span>
+                <br />
+                <a href={href} target="_blank" rel="noopener noreferrer">
+                  Visit Profile
+                </a>
+              </li>
+            ))}
           </ul>
         </motion.div>
       </div>
