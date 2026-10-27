@@ -8,6 +8,12 @@ export const orcidUrl = "https://orcid.org/0009-0002-9265-9541";
 export const scopusUrl = "https://www.scopus.com/authid/detail.uri?authorId=60102009100";
 export const webOfScienceUrl = "https://www.webofscience.com/wos/author/record/JMQ-1075-2023";
 
+export const researcherIds = [
+  { label: "ORCID", id: "0009-0002-9265-9541", href: orcidUrl },
+  { label: "Scopus Author ID", id: "60102009100", href: scopusUrl },
+  { label: "Web of Science ResearcherID", id: "JMQ-1075-2023", href: webOfScienceUrl },
+];
+
 export const socialLinks = [
   { href: "https://www.researchgate.net/profile/Faycal-Djebari?ev=hdr_xprf", label: "ResearchGate", Icon: FaResearchgate },
   { href: orcidUrl, label: "ORCID", Icon: FaOrcid },

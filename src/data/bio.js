@@ -19,6 +19,18 @@ export const visitingPositions = [
   },
 ];
 
+export const researchSummary = [
+  "My research sits at the intersection of financial econometrics and development economics. I build network-based volatility models — log-ARCH specifications with GARCH-informed correlation weights, quantile connectedness measures, and dynamic conditional correlations — to understand how shocks propagate across commodity and equity markets, and when that transmission intensifies in crash regimes.",
+  "A second strand of my work studies resource-dependent economies: how hydrocarbon rents interact with institutional quality to shape diversification and income inequality, using panel data methods across oil-exporting countries.",
+];
+
+export const collaboratingInstitutions = [
+  "University of Glasgow",
+  "Cardiff University",
+  "Universidad de Granada",
+  "University of Campania Luigi Vanvitelli",
+];
+
 export const interests = [
   "Financial Econometrics",
   "Network Volatility Models",

@@ -4,10 +4,10 @@ import { visitingPositions } from "../data/bio";
 import { publications } from "../data/publications";
 import { courses } from "../data/courses";
 import { replicationPackages } from "../data/replicationPackages";
-import { orcidUrl, scopusUrl, webOfScienceUrl } from "../data/socialLinks";
+import { researcherIds } from "../data/socialLinks";
 import {
   cvPdfPath,
-  workingPaperNote,
+  statusForArxivId,
   doctoralThesis,
   workInProgress,
   conferencePresentations,
@@ -46,11 +46,13 @@ function CV() {
           Download CV (PDF)
         </a>
         <p className="cv-identifiers mt-4">
-          <a href={orcidUrl} target="_blank" rel="noopener noreferrer">ORCID</a>
-          {" · "}
-          <a href={scopusUrl} target="_blank" rel="noopener noreferrer">Scopus</a>
-          {" · "}
-          <a href={webOfScienceUrl} target="_blank" rel="noopener noreferrer">Web of Science</a>
+          {researcherIds.map(({ label, id, href }, index) => (
+            <span key={label}>
+              {index > 0 && " · "}
+              {label}:{" "}
+              <a href={href} target="_blank" rel="noopener noreferrer">{id}</a>
+            </span>
+          ))}
         </p>
       </div>
 
@@ -184,8 +186,12 @@ function CV() {
                 <span className="item-meta">
                   arXiv preprint arXiv:{paper.arxivId}
                 </span>
-                <br />
-                <span className="item-meta">{workingPaperNote}</span>
+                {statusForArxivId(paper.arxivId) && (
+                  <>
+                    <br />
+                    <span className="item-meta">{statusForArxivId(paper.arxivId)}</span>
+                  </>
+                )}
                 <br />
                 <a href={paper.link} target="_blank" rel="noopener noreferrer">
                   View on arXiv

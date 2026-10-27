@@ -1,17 +1,31 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { exploreLinks } from "../data/nav";
-import { bioParagraphs, visitingPositions, interests } from "../data/bio";
+import { bioParagraphs, visitingPositions, interests, collaboratingInstitutions } from "../data/bio";
 import { publications } from "../data/publications";
+import { workInProgress } from "../data/cv";
 import { socialLinks, contactEmail } from "../data/socialLinks";
+import arxivPapers from "../data/arxivPapers.json";
 import profilePhoto from "../assets/profile-glasgow.jpg";
 
 const flagshipPaper = publications.find((p) => p.flagship);
 
+const stats = [
+  { value: publications.length, one: "Peer-reviewed publication", many: "Peer-reviewed publications" },
+  { value: arxivPapers.length, one: "Working paper", many: "Working papers" },
+  { value: workInProgress.length, one: "Project in progress", many: "Projects in progress" },
+  { value: collaboratingInstitutions.length, one: "Collaborating university abroad", many: "Collaborating universities abroad" },
+].map(({ value, one, many }) => ({ value, label: value === 1 ? one : many }));
+
+function scrollToAbout() {
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.getElementById("about")?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+}
+
 function Home() {
   return (
     <>
-      <section className="hero is-large site-hero">
+      <section className="hero site-hero">
         <div className="hero-body">
           <div className="container has-text-centered">
             <motion.div
@@ -30,9 +44,16 @@ function Home() {
                   Visiting Researcher — University of Glasgow (2026) · Universidad de Granada (Erasmus+ 2026)
                 </span>
               </h2>
+              <p className="hero-availability">
+                <span className="hero-availability-dot" aria-hidden="true" />
+                Open to postdoctoral opportunities &amp; research collaborations
+              </p>
               <div className="buttons is-centered mt-5">
-                <Link to="/research" className="button is-medium is-cta">
-                  View Research
+                <button type="button" onClick={scrollToAbout} className="button is-medium is-cta">
+                  About Me
+                </button>
+                <Link to="/research" className="button is-medium is-cta-outline">
+                  Research
                 </Link>
                 <Link to="/cv" className="button is-medium is-cta-outline">
                   Curriculum Vitae
@@ -41,19 +62,26 @@ function Home() {
             </motion.div>
           </div>
         </div>
+
+        <button type="button" className="scroll-cue" onClick={scrollToAbout} aria-label="Scroll to About section">
+          <span className="scroll-cue-label">Scroll</span>
+          <span className="scroll-cue-arrow" aria-hidden="true" />
+        </button>
       </section>
 
-      <div className="page-wrap">
-        <motion.div className="section-block" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-          <h2 className="section-heading">About</h2>
+      <div className="page-wrap is-home">
+        <motion.div id="about" className="section-block" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
+          <h2 className="section-heading">About Me</h2>
           <div className="about-grid">
-            <motion.div
-              className="profile-photo-frame"
-              whileHover={{ y: -6 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            >
-              <img src={profilePhoto} alt="Fayçal Djebari at the University of Glasgow" />
-            </motion.div>
+            <div className="about-photo-col">
+              <motion.div
+                className="profile-photo-frame"
+                whileHover={{ y: -6 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              >
+                <img src={profilePhoto} alt="Fayçal Djebari at the University of Glasgow" />
+              </motion.div>
+            </div>
 
             <div className="about-text">
               {bioParagraphs.map((paragraph, index) => (
@@ -74,6 +102,27 @@ function Home() {
                 ))}
               </ul>
             </div>
+          </div>
+
+          <div className="stat-grid">
+            {stats.map(({ value, label }, index) => (
+              <motion.div
+                key={label}
+                className="stat-card"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.07 }}
+              >
+                <span className="stat-value">{value}</span>
+                <span className="stat-label">{label}</span>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="institutions-row">
+            <span className="section-eyebrow">Collaborating with researchers at</span>
+            <p className="institutions-list">{collaboratingInstitutions.join(" · ")}</p>
           </div>
 
           {flagshipPaper && (
@@ -123,22 +172,21 @@ function Home() {
             I'm always glad to hear from researchers working in related areas — for collaboration,
             postdoctoral opportunities, or speaking inquiries, feel free to reach out directly.
           </p>
-          <ul className="simple-list">
-            <li>
-              <span className="item-title">Email</span>
-              <br />
-              <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
-            </li>
-            {socialLinks.map(({ href, label }) => (
-              <li key={label}>
-                <span className="item-title">{label}</span>
-                <br />
-                <a href={href} target="_blank" rel="noopener noreferrer">
-                  Visit Profile
-                </a>
-              </li>
+          <div className="id-grid get-in-touch-grid">
+            <a className="email-card" href={`mailto:${contactEmail}`}>
+              <span className="id-card-label">Email</span>
+              <span className="email-card-value">{contactEmail}</span>
+            </a>
+            {socialLinks.map(({ href, label, Icon }) => (
+              <a key={label} className="id-card has-icon" href={href} target="_blank" rel="noopener noreferrer">
+                <span className="id-card-icon" aria-hidden="true"><Icon /></span>
+                <span>
+                  <span className="id-card-label">{label}</span>
+                  <span className="id-card-value">Visit profile ↗</span>
+                </span>
+              </a>
             ))}
-          </ul>
+          </div>
         </motion.div>
       </div>
     </>

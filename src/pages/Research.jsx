@@ -1,6 +1,18 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { fetchArxivPapers } from "../utils/fetchArxiv";
-import { publications as manualPapers } from "../data/publications";
+import { publications } from "../data/publications";
+import { researchSummary, interests } from "../data/bio";
+import { workInProgress, statusForArxivId } from "../data/cv";
+import { researcherIds } from "../data/socialLinks";
+import PaperCard from "../components/PaperCard";
+
+const reveal = {
+  initial: { opacity: 0, y: 12 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.5 },
+};
 
 const Research = () => {
   const [arxivPapers, setArxivPapers] = useState([]);
@@ -21,60 +33,83 @@ const Research = () => {
     loadPapers();
   }, []);
 
-  const renderArxivContent = () => {
-    if (loading) return <p className="item-meta">Loading papers from arXiv…</p>;
-    if (error) return <p className="item-meta" style={{ color: "red" }}>{error}</p>;
-    if (arxivPapers.length === 0) return <p className="item-meta">No working papers found.</p>;
+  const renderWorkingPapers = () => {
+    if (loading) return <p className="item-meta">Loading working papers…</p>;
+    if (error) return <p className="item-meta">{error}</p>;
+    if (arxivPapers.length === 0) return <p className="item-meta">No working papers at the moment.</p>;
 
-    return arxivPapers.map((paper, index) => (
-      <div className="pub-row" key={index}>
-        <p className="pub-title">{paper.title}</p>
-        <p className="pub-meta">{paper.authors}</p>
-        <p className="pub-meta">
-          {paper.arxivId && <span>arXiv:{paper.arxivId} · </span>}
-          Submitted {new Date(paper.published).toLocaleDateString("en-GB", {
-            year: "numeric", month: "long", day: "numeric",
-          })}
-        </p>
-        <p className="pub-abstract">{paper.summary}</p>
-        <a href={paper.link} target="_blank" rel="noopener noreferrer">
-          View on arXiv
-        </a>
-      </div>
+    return arxivPapers.map((paper) => (
+      <PaperCard
+        key={paper.arxivId}
+        title={paper.title}
+        authors={paper.authors}
+        venue={`arXiv:${paper.arxivId} · ${new Date(paper.published).getFullYear()}`}
+        status={statusForArxivId(paper.arxivId)}
+        abstract={paper.summary}
+        links={[{ href: paper.link, label: "arXiv" }]}
+      />
     ));
   };
 
   return (
     <div className="page-wrap">
       <div className="page-header">
-        <h1 className="title is-size-3">Research</h1>
+        <span className="section-eyebrow">Research</span>
+        <h1 className="title is-size-3 mt-2">Research &amp; Publications</h1>
         <p className="page-intro">
-          Publications, working papers, and ongoing research in financial econometrics,
-          commodity markets, and development economics.
+          Financial econometrics, network volatility, and the economics of resource dependence.
         </p>
       </div>
 
-      <div className="section-block">
-        <h2 className="section-heading">Academic Publications</h2>
-        {manualPapers.map((pub, index) => (
-          <div className="pub-row" key={index}>
-            <p className="pub-title">{pub.title}</p>
-            <p className="pub-meta">{pub.authors}</p>
-            <p className="pub-meta">
-              {pub.type} · {pub.journal}
-            </p>
-            <p className="pub-abstract">{pub.abstract}</p>
-            <a href={pub.link} target="_blank" rel="noopener noreferrer">
-              View Paper
-            </a>
-          </div>
+      <motion.section className="section-block" {...reveal}>
+        <h2 className="section-heading">Research Interests</h2>
+        {researchSummary.map((paragraph, index) => (
+          <p key={index} className="lead-paragraph">{paragraph}</p>
         ))}
-      </div>
+        <div className="tag-row mt-4">
+          {interests.map((interest) => (
+            <span className="tag-soft" key={interest}>{interest}</span>
+          ))}
+        </div>
+      </motion.section>
 
-      <div className="section-block">
+      <motion.section className="section-block" {...reveal}>
+        <h2 className="section-heading">Researcher Profiles</h2>
+        <div className="id-grid is-three">
+          {researcherIds.map(({ label, id, href }) => (
+            <a key={label} className="id-card" href={href} target="_blank" rel="noopener noreferrer">
+              <span className="id-card-label">{label}</span>
+              <span className="id-card-value">{id}</span>
+            </a>
+          ))}
+        </div>
+      </motion.section>
+
+      <motion.section className="section-block" {...reveal}>
+        <h2 className="section-heading">Published Papers</h2>
+        {publications.map((pub) => (
+          <PaperCard
+            key={pub.id}
+            title={pub.title}
+            authors={pub.authors}
+            venue={pub.journal}
+            abstract={pub.abstract}
+            links={[{ href: pub.link, label: pub.doi ? `DOI ${pub.doi}` : "Article" }]}
+          />
+        ))}
+      </motion.section>
+
+      <motion.section className="section-block" {...reveal}>
         <h2 className="section-heading">Working Papers</h2>
-        {renderArxivContent()}
-      </div>
+        {renderWorkingPapers()}
+      </motion.section>
+
+      <motion.section className="section-block" {...reveal}>
+        <h2 className="section-heading">Work in Progress</h2>
+        {workInProgress.map((item) => (
+          <PaperCard key={item.title} title={item.title} venue={item.collaborators} />
+        ))}
+      </motion.section>
     </div>
   );
 };

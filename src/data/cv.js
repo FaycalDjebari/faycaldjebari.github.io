@@ -1,6 +1,13 @@
 export const cvPdfPath = "/cv/djebari-cv.pdf";
 
-export const workingPaperNote = "Currently under revision (R&R) at the Journal of Forecasting.";
+// Keyed by arXiv ID without the version suffix (e.g. "2507.15046", not "2507.15046v2").
+export const workingPaperStatus = {
+  "2507.15046": "Revise & Resubmit at the Journal of Forecasting",
+};
+
+export function statusForArxivId(arxivId) {
+  return workingPaperStatus[arxivId?.replace(/v\d+$/, "")];
+}
 
 export const doctoralThesis = {
   title:
