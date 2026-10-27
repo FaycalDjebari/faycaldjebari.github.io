@@ -172,8 +172,8 @@ function Home() {
         <motion.div className="section-block" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.15 }}>
           <h2 className="section-heading">Get in Touch</h2>
           <p style={{ lineHeight: "1.85", maxWidth: "600px" }}>
-            I'm always glad to hear from researchers working in related areas — for collaboration,
-            postdoctoral opportunities, or speaking inquiries, feel free to reach out directly.
+            If you work on related questions, I would be glad to hear from you about a collaboration,
+            a postdoctoral position, or an invitation to present.
           </p>
           <div className="id-grid get-in-touch-grid">
             <a className="email-card" href={`mailto:${contactEmail}`}>

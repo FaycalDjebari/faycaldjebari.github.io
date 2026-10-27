@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import CvViewer from "../components/CvViewer";
+import CvPreview from "../components/CvPreview";
 import { fetchArxivPapers } from "../utils/fetchArxiv";
 import { visitingPositions } from "../data/bio";
 import { publications } from "../data/publications";
@@ -31,14 +32,8 @@ const CV_DOWNLOAD_NAME = "Faycal-Djebari-CV.pdf";
 function CV() {
   const [arxivPapers, setArxivPapers] = useState([]);
   const [viewerOpen, setViewerOpen] = useState(false);
+  const openViewer = useCallback(() => setViewerOpen(true), []);
   const closeViewer = useCallback(() => setViewerOpen(false), []);
-
-  // Browsers without an inline PDF viewer (notably Chrome on Android) show a
-  // blank frame, so hand the file to the browser/OS viewer in a new tab.
-  const openCv = () => {
-    if (navigator.pdfViewerEnabled) setViewerOpen(true);
-    else window.open(cvPdfPath, "_blank", "noopener");
-  };
 
   useEffect(() => {
     const loadPapers = async () => {
@@ -55,15 +50,12 @@ function CV() {
         <p className="page-intro">
           Academic background, publications, and experience.
         </p>
-        <div className="buttons is-centered mt-4 mb-1">
-          <button type="button" className="button is-cta" onClick={openCv}>
-            View CV
-          </button>
-          <a href={cvPdfPath} download={CV_DOWNLOAD_NAME} className="button is-cv-outline">
-            Download PDF
-          </a>
-        </div>
-        <p className="cv-version">Version: {cvVersion}</p>
+        <CvPreview
+          pdfPath={cvPdfPath}
+          downloadName={CV_DOWNLOAD_NAME}
+          version={cvVersion}
+          onOpen={openViewer}
+        />
         <CvViewer
           open={viewerOpen}
           onClose={closeViewer}

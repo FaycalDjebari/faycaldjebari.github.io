@@ -208,7 +208,7 @@ function App() {
       >
         <div className="content has-text-centered">
           <p className="footer-copy">
-            {String.fromCharCode(169)} {new Date().getFullYear()} Fayçal Djebari — All rights reserved.
+            {String.fromCharCode(169)} {new Date().getFullYear()} Fayçal Djebari. All rights reserved.
           </p>
           <div className="social-row mt-4">
             {socialLinks.map(({ href, label, Icon }) => (
