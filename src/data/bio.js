@@ -1,7 +1,7 @@
 export const heroTitle = "Ph.D. Candidate in Quantitative Economics";
 
 export const heroStatement =
-  "My research develops network econometric models studying how risk and volatility spread across financial and commodity markets, and studies how oil dependence shapes institutions and inequality.";
+  "My research develops network econometric models for studying how risk and volatility spread across financial and commodity markets, and examines how oil dependence shapes institutions and inequality.";
 
 export const heroAffiliation =
   "University of Béjaïa, Algeria · Visiting researcher at the University of Glasgow & Universidad de Granada";
