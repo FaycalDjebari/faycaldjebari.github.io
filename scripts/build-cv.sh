@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Builds the public CV (no phone number, no referee details) from the LaTeX
-# source and writes it to public/cv/djebari-cv.pdf, the file the site serves.
+# source and writes it to public/Faycal-Djebari-CV.pdf, the file the site serves.
 #
 # Usage:  npm run cv -- "/path/to/djebari_cv.tex"
 set -euo pipefail
@@ -9,7 +9,7 @@ tex="${1:?Usage: npm run cv -- /path/to/djebari_cv.tex}"
 [ -f "$tex" ] || { echo "Not found: $tex" >&2; exit 1; }
 
 repo="$(cd "$(dirname "$0")/.." && pwd)"
-out="$repo/public/cv/djebari-cv.pdf"
+out="$repo/public/Faycal-Djebari-CV.pdf"
 build="$(mktemp -d)"
 trap 'rm -rf "$build"' EXIT
 
@@ -37,4 +37,4 @@ fi
 
 mkdir -p "$(dirname "$out")"
 cp "$build/public.pdf" "$out"
-echo "Public CV written to public/cv/djebari-cv.pdf"
+echo "Public CV written to public/Faycal-Djebari-CV.pdf"

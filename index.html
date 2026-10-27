@@ -15,20 +15,15 @@
     />
     <title>Home — Fayçal Djebari</title>
     <script>
-      // GitHub Pages SPA fallback: decode the path encoded by 404.html and
-      // restore it via pushState before React Router takes over.
-      // https://github.com/rafgraph/spa-github-pages
+      // GitHub Pages SPA fallback: 404.html redirects /some/path?x=1 to
+      // /?p=/some/path&q=x=1 (with & escaped as ~and~). Restore the original
+      // URL via replaceState before React Router reads it.
       (function (l) {
-        if (l.search[1] === "/") {
-          var decoded = l.search
-            .slice(1)
-            .split("&")
-            .map(function (s) {
-              return s.replace(/~and~/g, "&");
-            })
-            .join("?");
-          window.history.replaceState(null, null, l.pathname.slice(0, -1) + decoded + l.hash);
-        }
+        if (l.search.indexOf("?p=/") !== 0) return;
+        var parts = l.search.slice(3).split("&q=");
+        var path = parts[0].replace(/~and~/g, "&");
+        var query = parts[1] ? "?" + parts[1].replace(/~and~/g, "&") : "";
+        window.history.replaceState(null, null, path + query + l.hash);
       })(window.location);
     </script>
   </head>

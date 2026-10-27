@@ -1,6 +1,7 @@
 // To publish a new CV: run `npm run cv -- "/path/to/djebari_cv.tex"` (or
-// replace public/cv/djebari-cv.pdf by hand) and update cvVersion below.
-export const cvPdfPath = "/cv/djebari-cv.pdf";
+// replace public/Faycal-Djebari-CV.pdf by hand) and update cvVersion below.
+// The PDF lives at the site root: a /cv/ folder would clash with the /cv page.
+export const cvPdfPath = "/Faycal-Djebari-CV.pdf";
 export const cvVersion = "October 2026";
 
 // Keyed by arXiv ID without the version suffix (e.g. "2507.15046", not "2507.15046v2").
